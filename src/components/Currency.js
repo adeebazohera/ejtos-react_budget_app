@@ -1,25 +1,40 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
+import '../App.css'; 
 
-const Currency = (props) => {
-    const [currency, setCurrency] = useState('$ Dollar');
 
-    const handleSelect = (event) => {
-        setCurrency(event.target.value);
-    }
+const Currency = () => {
+    const {dispatch} = useContext(AppContext);
+    const [currency, setCurrency] = useState('Currency ($ Dollar)');
+    const [isOpen, setIsOpen] = useState(false);
+    const [isCurrency,sendCurrency] = useState('$')
+    const handleCurrencyChange = (event) => {
+        setCurrency(`Currency (${event.target.textContent})`);
+        setIsOpen(false);
+        sendCurrency(event.target.id);
+        dispatch({
+            type: 'CHG_CURRENCY',
+            payload: isCurrency,
+        });
+    };
+
     return (
-        <div className="btn-group">
-            <button className="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Currency ({currency})
-            </button>
-            <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a className="dropdown-item" href="#" onClick={() => handleSelect('$ Dollar')}>$ Dollar</a>
-                <a className="dropdown-item" href="#" onClick={() => handleSelect('£ Pound')}>£ Pound</a>
-                <a className="dropdown-item" href="#" onClick={() => handleSelect('€ Euro')}>€ Euro</a>
-                <a className="dropdown-item" href="#" onClick={() => handleSelect('₹ Rupee')}>€ Rupee</a>
+        <div>
+            <div className="alert alert-success dropdown-toggle" type="button" onClick={() => setIsOpen(!isOpen)}>
+                {currency}
             </div>
+            {isOpen && (
+                <div className="dropdown-menu show">
+                    <button className="dropdown-item" id="$" onClick={handleCurrencyChange}>$ Dollar</button>
+                    <button className="dropdown-item" id="£" onClick={handleCurrencyChange}>£ Pound</button>
+                    <button className="dropdown-item" id="€" onClick={handleCurrencyChange}>€ Euro</button>
+                    <button className="dropdown-item" id="₹" onClick={handleCurrencyChange}>₹ Rupee</button>
+                </div>
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default Currency;
+
+
