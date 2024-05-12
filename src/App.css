@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+.dropdown-toggle {
+    border: none;
+}
+
+.dropdown-menu {
+    background-color: #D1E7DD;
+    border: 2px solid #32ca86;
+    width: auto;
+}
+
+.dropdown-item {
+    color: black;
+}
+
+.dropdown-item:hover {
+    background-color: whitesmoke;
+}
